@@ -13,6 +13,7 @@ import Interviews from "./components/interviews/Interviews";
 import InterviewShow from "./components/interviews/InterviewShow";
 import InterviewsNew from "./components/interviews/InterviewsNew";
 import InterviewEdit from "./components/interviews/InterviewEdit";
+import InterviewDelete from "./components/interviews/InterviewDelete";
 
 function App() {
   return (
@@ -26,6 +27,10 @@ function App() {
           <Route
             path="/interviews/:interviewId/edit"
             component={InterviewEdit}
+          />
+          <Route
+            path="/interviews/:interviewId/delete"
+            component={InterviewDelete}
           />
           <Route
             exact
