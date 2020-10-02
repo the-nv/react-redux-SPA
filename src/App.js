@@ -12,6 +12,7 @@ import HomePage from "./components/HomePage";
 import Interviews from "./components/interviews/Interviews";
 import InterviewShow from "./components/interviews/InterviewShow";
 import InterviewsNew from "./components/interviews/InterviewsNew";
+import InterviewEdit from "./components/interviews/InterviewEdit";
 
 function App() {
   return (
@@ -21,6 +22,10 @@ function App() {
           <Route
             path="/interviews/new"
             component={InterviewsNew}
+          />
+          <Route
+            path="/interviews/:interviewId/edit"
+            component={InterviewEdit}
           />
           <Route
             exact
