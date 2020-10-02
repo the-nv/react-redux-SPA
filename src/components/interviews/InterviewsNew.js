@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import { serialize } from "object-to-formdata";
 
 function InterviewsNew() {
   const initialState = {
@@ -25,22 +25,35 @@ function InterviewsNew() {
 
   const [interview, setInterview] = useState(initialState);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("handling", interview);
-    console.log(
-      "handling",
-      interview.interviews_users_attributes[1].users.resume
+    const fileInput = document.getElementById(
+      "interview_interviews_users_attributes_1_users_resume"
+    );
+    console.log(fileInput.files[0]);
+
+    const update = { interview: interview };
+    const formData = serialize(update);
+    formData.set(
+      "interview[interviews_users_attributes][1][users][resume]",
+      fileInput.files[0],
+      interview.interviews_users_attributes[1].users.resume.replace(
+        "C://fakepath//",
+        ""
+      )
     );
 
-    axios
-      .post("http://localhost:3000/api/v1/interviews", interview)
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
+    try {
+      const response = await fetch("http://localhost:3000/api/v1/interviews", {
+        method: "POST",
+        body: formData,
       });
+
+      console.log(response);
+      window.location = "http://localhost:3006/#/interviews/"
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const onChange = (e) => {
@@ -231,8 +244,6 @@ function InterviewsNew() {
       default:
         setInterview({ ...interview });
     }
-
-    console.log(interview);
   };
 
   return (
